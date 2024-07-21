@@ -1220,9 +1220,18 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return self.request.user == post.author.user
 
 
+# class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+#     model = Post
+#     success_url = reverse_lazy('home')
+#     template_name = 'blog/post_confirm_delete.html'
+
+#     def test_func(self):
+#         post = self.get_object()
+#         return self.request.user == post.author.user
+
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('blog-home')
     template_name = 'blog/post_confirm_delete.html'
 
     def test_func(self):
