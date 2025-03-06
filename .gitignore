@@ -2,3 +2,4 @@ __pycache__/
 venv/
 myvenv/
 */migrations/
+greensync-e2e.pem

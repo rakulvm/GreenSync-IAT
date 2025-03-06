@@ -1,0 +1,17 @@
+version: '1.0'
+
+services:
+  django_app:
+    build: .
+    container_name: greensync_django
+    restart: always
+    command: >
+       sh -c "python manage.py makemigrations &&
+              python manage.py migrate &&
+              python manage.py collectstatic --noinput &&
+              python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./db.sqlite3:/app/db.sqlite3
+      - .:/app
+    ports:
+      - "8000:8000"
