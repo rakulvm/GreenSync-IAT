@@ -3,7 +3,7 @@ terraform {
     hostname     = "app.terraform.io"
     organization = "rakul_org"
     workspaces {
-      name = "GreenSync-IAT"
+      name = "Greensync_e2e"
     }
   }
 }
