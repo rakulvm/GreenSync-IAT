@@ -1,6 +1,6 @@
 # Deploy yaml typically has 5 points in place: event, job, runner, steps, config
 
-#new comment for checking github workflows - neww
+#new comment for checking github workflows
 
 name: "Terraform Pipeline Provision EC2"
 
