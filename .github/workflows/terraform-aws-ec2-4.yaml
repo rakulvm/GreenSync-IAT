@@ -1,16 +1,14 @@
 # Deploy yaml typically has 5 points in place: event, job, runner, steps, config
 
-#new comment for checking github workflows
-
 name: "Terraform Pipeline Provision EC2"
 
 on:
- push:
-   branches: 
-    - docker
- pull_request:
-   branches: 
-    - docker
+  push:
+    branches: 
+      - docker
+  pull_request:
+    branches: 
+      - docker
 
 env:
   TF_LOG: INFO
@@ -18,55 +16,58 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   TF_CLOUD_ORGANIZATION: "rakul_org"
   TF_WORKSPACE: "GreenSync-IAT"
-  TF_API_TOKEN: ${{ secrets.TF_API_TOKEN}}
+  TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
   TFE_TOKEN: ${{ secrets.TF_API_TOKEN }}
   CONFIG_DIRECTORY: "./deployments/terraform/terraform-aws-ec2-tf/terraform/"
+  # TERRAFORM_CLI_PATH: "/usr/local/bin/terraform"  # Ensuring correct Terraform binary path
 
- 
 jobs:
- terraform:
-   name: "Terraform Pipeline Provision EC2 with TF Cloud"
-   runs-on: ubuntu-latest
-   defaults:
-     run:
-       shell: bash
-       working-directory: ./deployments/terraform/terraform-aws-ec2-tf/terraform
- 
-   steps:
-     - name: Checkout the repository to the runner
-       uses: actions/checkout@v2
- 
-     - name: Setup Terraform with specified version on the runner
-       uses: hashicorp/setup-terraform@v2
-       with:
-         terraform_version: 1.3.0
-     
-     - name: Manually Set Terraform Token
-       run: echo "TF_API_TOKEN=${{ secrets.TF_API_TOKEN }}" >> $GITHUB_ENV && echo "TFE_TOKEN=${{ secrets.TF_API_TOKEN }}" >> $GITHUB_ENV
-    
-     - name: Remove Existing Terraform State
-       run: rm -rf .terraform
-    
-     - name: Terraform init 
-       id: init
-       run: terraform init -lock=false
-       working-directory: ./deployments/terraform/terraform-aws-ec2-tf/terraform
+  terraform:
+    name: "Terraform Pipeline Provision EC2 with TF Cloud"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./deployments/terraform/terraform-aws-ec2-tf/terraform
 
-     - name: Terraform format
-       id: fmt
-       run: terraform fmt
-       working-directory: ./deployments/terraform/terraform-aws-ec2-tf/terraform
-    
-     - name: Terraform validate
-       id: validate
-       run: terraform validate
-       working-directory: ./deployments/terraform/terraform-aws-ec2-tf/terraform
-    
-     - name: Terraform Plan
-       id: plan
-       run: terraform plan -input=false -lock=false
-       working-directory: ./deployments/terraform/terraform-aws-ec2-tf/terraform
+    steps:
+      - name: Checkout the repository to the runner
+        uses: actions/checkout@v2
 
-     - name: Terraform Apply
-       run: terraform apply -auto-approve -input=false -lock=false
-       working-directory: ./deployments/terraform/terraform-aws-ec2-tf/terraform
+      - name: Setup Terraform with specified version on the runner
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.3.0
+
+      - name: Manually Set Terraform API Token
+        run: |
+          export TF_API_TOKEN=${{ secrets.TF_API_TOKEN }}
+          export TFE_TOKEN=${{ secrets.TF_API_TOKEN }}
+          echo "TF_API_TOKEN=${{ secrets.TF_API_TOKEN }}" >> $GITHUB_ENV
+          echo "TFE_TOKEN=${{ secrets.TF_API_TOKEN }}" >> $GITHUB_ENV
+
+      - name: Verify Terraform Cloud Authentication
+        run: |
+          curl -H "Authorization: Bearer ${{ secrets.TF_API_TOKEN }}" https://app.terraform.io/api/v2/account/details || exit 1
+
+      - name: Remove Existing Terraform State
+        run: rm -rf .terraform
+
+      - name: Terraform Init
+        id: init
+        run: terraform init -lock=false
+
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -input=false -lock=false
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -input=false -lock=false
