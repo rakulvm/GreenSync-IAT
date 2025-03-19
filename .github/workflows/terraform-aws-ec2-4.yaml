@@ -17,7 +17,7 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   TF_CLOUD_ORGANIZATION: "rakul_org"
-  TF_WORKSPACE: "Greensync_e2e"
+  TF_WORKSPACE: "GreenSync-IAT"
   TF_API_TOKEN: ${{ secrets.TF_API_TOKEN}}
   TFE_TOKEN: ${{ secrets.TF_API_TOKEN }}
   CONFIG_DIRECTORY: "./deployments/terraform/terraform-aws-ec2-tf/terraform/"
@@ -40,6 +40,12 @@ jobs:
        uses: hashicorp/setup-terraform@v2
        with:
          terraform_version: 1.3.0
+     
+     - name: Manually Set Terraform Token
+       run: echo "TF_API_TOKEN=${{ secrets.TF_API_TOKEN }}" >> $GITHUB_ENV && echo "TFE_TOKEN=${{ secrets.TF_API_TOKEN }}" >> $GITHUB_ENV
+    
+     - name: Remove Existing Terraform State
+       run: rm -rf .terraform
     
      - name: Terraform init 
        id: init
