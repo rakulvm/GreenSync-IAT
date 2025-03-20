@@ -5,7 +5,7 @@ variable "aws_instance" {
 
 variable "aws_ami" {
   type    = string
-  default = "ami-002325eb8c4762525"
+  default = "ami-0884d2865dbe9de4b"
 }
 
 variable "availability_zone" {
