@@ -34,12 +34,12 @@ jobs:
 
     steps:
       - name: Checkout the repository to the runner
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Terraform with specified version on the runner
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v2.7.0
         with:
-          terraform_version: 1.3.0
+          terraform_version: 1.11.1
 
       # - name: Manually Set Terraform API Token
       #   run: |
@@ -57,7 +57,7 @@ jobs:
 
       - name: Terraform Init
         id: init
-        run: terraform init -lock=false
+        run: terraform init
 
       - name: Terraform Format
         id: fmt
@@ -69,7 +69,7 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -input=false -lock=false
+        run: terraform plan -input=false -target=aws_instance.django_e2e
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve -input=false -lock=false
+      # - name: Terraform Apply
+      #   run: terraform apply -auto-approve -input=false -lock=false
