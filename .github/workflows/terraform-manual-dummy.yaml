@@ -1,0 +1,18 @@
+name: "Manual Trigger Dummy Workflow"
+
+on:
+  workflow_dispatch:  # Only runs when manually triggered from the Actions tab
+
+jobs:
+  dummy_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Print a friendly message
+        run: echo "Hello! This workflow was triggered manually."
+
+      - name: List files in the repo
+        run: ls -la

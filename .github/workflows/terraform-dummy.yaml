@@ -1,0 +1,27 @@
+# .github/workflows/dummy-workflow.yml
+
+name: "Dummy Workflow"
+
+on:
+  push:
+    branches:  
+      - docker
+  # You can add more triggers here if needed
+  # pull_request:
+  # workflow_dispatch:
+
+jobs:
+  dummy_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Print a friendly message
+        run: echo "Hello from the Dummy Workflow!"
+
+      - name: List files in the repo
+        run: ls -la
+
+      # You can add more steps or actions here

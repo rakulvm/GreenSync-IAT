@@ -1,0 +1,9 @@
+Django
+xhtml2pdf
+django-ckeditor
+gunicorn
+django-mapbox-location-field
+django-betterforms
+django-crispy-forms
+crispy-bootstrap4
+django-widget-tweaks

@@ -28,13 +28,13 @@ SECRET_KEY = 'django-insecure-+$i1&wst0u^(77^vw9x*&fkc+pk*c+%w!fb1@hr)3k(=sr+!^o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1","ecogreenmart.in","www.ecogreenmart.in"]
+ALLOWED_HOSTS = ["*", "0.0.0.0", "localhost", "django_app"]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://ecogreenmart.in',
-    'https://www.ecogreenmart.in'
-    'http://127.0.0.1:8000/'
+    'http://0.0.0.0:8000',
+    'http://localhost:8000'
 ]
+
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -154,17 +154,14 @@ CKEDITOR_CONFIGS = {
 
 BASE_DIR1 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# URL to redirect to for login
 LOGIN_URL = "/accounts/login/"
 
-# URL to redirect to after login
 LOGIN_REDIRECT_URL = "/afterlogin"
 
-# URL to redirect to after logout
 LOGOUT_REDIRECT_URL = "/dashboard"
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR1, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR1, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR1, 'media')
