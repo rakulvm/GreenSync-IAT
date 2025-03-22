@@ -2,10 +2,6 @@
 
 # instance, key pair, security group, vpc -> where our subnet resides -> where our ec2 instance resides, internet gateway for allowing ansible to install dependencies by accessing the internet
 
-resource "aws_key_pair" "django-deployer" {
-  key_name   = "django-depl"
-  public_key = var.aws_key
-}
 
 resource "aws_vpc" "main" {
   cidr_block       = var.vpc_cidr
@@ -89,7 +85,7 @@ resource "aws_instance" "django_e2e" {
   ami = var.aws_ami
   instance_type     = var.aws_instance
   availability_zone = var.availability_zone
-  key_name        = aws_key_pair.django-deployer.key_name
+  key_name        = var.aws_key
   subnet_id       = aws_subnet.public.id
   vpc_security_group_ids = [aws_security_group.django-sg.id]
 
