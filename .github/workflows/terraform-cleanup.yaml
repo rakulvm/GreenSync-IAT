@@ -1,0 +1,32 @@
+name: "Terraform Destroy"
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: "Type 'yes' to confirm destruction"
+        required: true
+        default: "no"
+
+jobs:
+  terraform_destroy:
+    if: ${{ github.event.inputs.confirm == 'yes' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: "1.3.0"
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Plan Destroy
+        run: terraform plan -destroy -out=destroy.tfplan
+
+      - name: Apply Destroy
+        run: terraform apply destroy.tfplan
