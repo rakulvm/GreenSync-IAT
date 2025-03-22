@@ -3,7 +3,7 @@
 # JDK installation
 sudo apt update
 
-sudo apt install openjdk-17-jdk -y
+sudo apt install -y openjdk-17-jre-headless
 sudo apt install zip -y
 
 echo 'JDK successfully installed'
