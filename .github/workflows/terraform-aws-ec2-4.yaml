@@ -48,9 +48,9 @@ jobs:
       #     echo "TF_TOKEN_app_terraform_io=${{ secrets.TF_API_TOKEN }}" >> $GITHUB_ENV
       #     echo "TFE_TOKEN=${{ secrets.TF_API_TOKEN }}" >> $GITHUB_ENV
 
-      - name: Verify Terraform Cloud Authentication
-        run: |
-          curl -H "Authorization: Bearer ${{ secrets.TF_API_TOKEN }}" https://app.terraform.io/api/v2/account/details || exit 1
+      # - name: Verify Terraform Cloud Authentication
+      #   run: |
+      #     curl -H "Authorization: Bearer ${{ secrets.TF_API_TOKEN }}" https://app.terraform.io/api/v2/account/details || exit 1
 
       - name: Remove Existing Terraform State
         run: rm -rf .terraform
