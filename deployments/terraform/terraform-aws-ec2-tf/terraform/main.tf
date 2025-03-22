@@ -113,7 +113,7 @@ resource "aws_instance" "django_e2e" {
     type        = "ssh"
     host        = self.public_ip
     user        = "ubuntu"
-    private_key = file("django-depl")
+    private_key = file("django-e2e.pem")
   }
 }
 
