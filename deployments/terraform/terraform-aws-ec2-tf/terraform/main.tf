@@ -59,12 +59,12 @@ resource "aws_security_group" "django-sg" {
   }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "django-sg" {
+resource "aws_vpc_security_group_ingress_rule" "django-sg-jenkins" {
   security_group_id = aws_security_group.django-sg.id
   cidr_ipv4   = var.ingress_ipv4
-  from_port   = 80
+  from_port   = 8080
   ip_protocol = "tcp"
-  to_port     = 80
+  to_port     = 8080
 }
 
 resource "aws_vpc_security_group_ingress_rule" "django-sg-ssh" {
