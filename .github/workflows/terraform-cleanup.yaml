@@ -40,7 +40,7 @@ jobs:
         run: terraform init -input=false
 
       - name: Plan Destroy
-        run: terraform plan -destroy -out=destroy.tfplan
+        run: terraform plan -destroy
 
       - name: Apply Destroy
-        run: terraform apply destroy.tfplan
+        run: terraform apply -destroy
