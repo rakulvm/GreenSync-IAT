@@ -20,7 +20,7 @@ env:
 defaults:
   run:
     shell: bash
-    working-directory: ${{ env.CONFIG_DIRECTORY }}
+    working-directory: "./deployments/terraform/terraform-aws-ec2-tf/terraform/"
 
 jobs:
   terraform_destroy:
