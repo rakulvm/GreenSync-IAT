@@ -17,6 +17,11 @@ env:
   TFE_TOKEN: ${{ secrets.TF_API_TOKEN }}
   CONFIG_DIRECTORY: "./deployments/terraform/terraform-aws-ec2-tf/terraform/"
 
+defaults:
+  run:
+    shell: bash
+    working-directory: ${{ env.CONFIG_DIRECTORY }}
+
 jobs:
   terraform_destroy:
     if: ${{ github.event.inputs.confirm == 'yes' }}
@@ -31,8 +36,8 @@ jobs:
         with:
           terraform_version: "1.3.0"
 
-      - name: Terraform Init
-        run: terraform init
+      - name: Terraform Init 
+        run: terraform init -input=false
 
       - name: Plan Destroy
         run: terraform plan -destroy -out=destroy.tfplan
