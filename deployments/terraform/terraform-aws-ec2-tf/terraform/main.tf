@@ -135,7 +135,7 @@ resource "aws_lb" "django_e2e_alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.django-sg.id]
-  subnets            = [for subnet in aws_subnet.public : subnet.id]
+  subnet_id          = aws_subnet.public.id
 
 
   access_logs {
