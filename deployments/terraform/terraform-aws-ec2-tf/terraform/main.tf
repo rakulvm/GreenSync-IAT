@@ -115,6 +115,11 @@ resource "aws_s3_bucket_policy" "lb_logs_policy" {
         }
         Action   = "s3:PutObject"
         Resource = "arn:aws:s3:::django-log-bucket/django-e2e-alb/*"
+        Condition = {
+          StringEquals = {
+            "s3:x-amz-acl" = "bucket-owner-full-control"
+          }
+        }
       },
       {
         Sid       = "AWSLogDeliveryAclCheck"
