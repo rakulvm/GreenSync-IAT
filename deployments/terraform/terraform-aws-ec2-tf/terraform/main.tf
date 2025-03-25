@@ -131,7 +131,7 @@ resource "aws_lb_listener" "django_listen" {
 }
 
 resource "aws_lb" "django_e2e_alb" {
-  name               = "django_e2e_alb"
+  name               = "django-e2e-alb"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.django-sg.id]
@@ -140,7 +140,7 @@ resource "aws_lb" "django_e2e_alb" {
 
   access_logs {
     bucket  = aws_s3_bucket.lb_logs.id
-    prefix  = "django_e2e_alb"
+    prefix  = "django-e2e-alb"
     enabled = true
   }
 
@@ -150,7 +150,7 @@ resource "aws_lb" "django_e2e_alb" {
 }
 
 resource "aws_lb_target_group" "django_e2e_tg" {
-  name     = "django_e2e_tg"
+  name     = "django-e2e-tg"
   port     = 8080
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
