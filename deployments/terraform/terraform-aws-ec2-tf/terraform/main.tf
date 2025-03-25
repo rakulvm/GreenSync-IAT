@@ -114,7 +114,7 @@ resource "aws_s3_bucket_policy" "lb_logs_policy" {
           "AWS": ["arn:aws:iam::127311923021:root"]
         }
         Action   = "s3:PutObject"
-        Resource = "${aws_s3_bucket.lb_logs.arn}/django-e2e-alb/*"
+        Resource = "arn:aws:s3:::django-log-bucket/django-e2e-alb/*"
       },
       {
         Sid       = "AWSLogDeliveryAclCheck"
@@ -123,7 +123,7 @@ resource "aws_s3_bucket_policy" "lb_logs_policy" {
           "AWS": ["arn:aws:iam::127311923021:root"]
         }
         Action   = "s3:GetBucketAcl"
-        Resource = aws_s3_bucket.lb_logs.arn
+        Resource = "arn:aws:s3:::django-log-bucket"
       }
     ]
   })
