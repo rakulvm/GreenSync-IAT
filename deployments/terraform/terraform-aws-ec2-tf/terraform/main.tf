@@ -27,7 +27,7 @@ resource "aws_subnet" "private" {
   vpc_id = aws_vpc.main.id
   cidr_block = var.private_subnet_cidr
   map_public_ip_on_launch = true
-  availability_zone = var.availability_zone
+  availability_zone = var.availability_zone_2
 
   tags = {
     Name = "Private-Subnet"
@@ -146,7 +146,7 @@ resource "aws_lb" "django_e2e_alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.django-sg.id]
-  subnets            = [aws_subnet.public.id]
+  subnets            = [aws_subnet.public.id, aws_subnet.private.id]
 
 
   access_logs {
