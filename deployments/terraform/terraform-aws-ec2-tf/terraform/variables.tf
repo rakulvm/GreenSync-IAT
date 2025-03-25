@@ -13,6 +13,11 @@ variable "availability_zone" {
   default = "us-east-2a"
 }
 
+variable "availability_zone_2" {
+  type    = string
+  default = "us-east-2b"
+}
+
 variable "aws_key" {
   type    = string
   default = "django-e2e"
@@ -26,6 +31,11 @@ variable "vpc_cidr" {
 variable "subnet_cidr" {
   type    = string
   default = "10.0.1.0/24"
+}
+
+variable "private_subnet_cidr" {
+  type    = string
+  default = "10.0.2.0/24"
 }
 
 variable "aws_route_table" {

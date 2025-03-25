@@ -23,6 +23,17 @@ resource "aws_subnet" "public" {
   }
 }
 
+resource "aws_subnet" "private" {
+  vpc_id = aws_vpc.main.id
+  cidr_block = var.private_subnet_cidr
+  map_public_ip_on_launch = true
+  availability_zone = var.availability_zone
+
+  tags = {
+    Name = "Private-Subnet"
+  }
+}
+
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.main.id
 
