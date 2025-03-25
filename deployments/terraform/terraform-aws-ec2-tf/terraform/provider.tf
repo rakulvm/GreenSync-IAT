@@ -12,8 +12,8 @@ terraform {
 }
 
 provider "godaddy" {
-  key    = var.godaddy_api_key
-  secret = var.godaddy_api_secret
+  key    = "gHptDaEZnP48_6JjzMLRdG4ptJG7ddAqqhC"
+  secret = "Qz3eevDBU2F4gMoqe9vtcV"
 }
 
 provider "aws" {
