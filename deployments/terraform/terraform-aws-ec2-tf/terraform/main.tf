@@ -101,6 +101,34 @@ resource "aws_s3_bucket" "lb_logs" {
     }
 }
 
+resource "aws_s3_bucket_policy" "lb_logs_policy" {
+  bucket = aws_s3_bucket.lb_logs.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid       = "AWSLogDeliveryWrite"
+        Effect    = "Allow"
+        Principal = {
+          Service = "delivery.elasticloadbalancing.amazonaws.com"
+        }
+        Action   = "s3:PutObject"
+        Resource = "${aws_s3_bucket.lb_logs.arn}/django-e2e-alb/*"
+      },
+      {
+        Sid       = "AWSLogDeliveryAclCheck"
+        Effect    = "Allow"
+        Principal = {
+          Service = "delivery.elasticloadbalancing.amazonaws.com"
+        }
+        Action   = "s3:GetBucketAcl"
+        Resource = aws_s3_bucket.lb_logs.arn
+      }
+    ]
+  })
+}
+
 resource "godaddy_domain_record" "jenkins" {
   depends_on = [ aws_lb.django_e2e_alb ]
 
