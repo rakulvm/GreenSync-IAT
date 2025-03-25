@@ -111,7 +111,7 @@ resource "aws_s3_bucket_policy" "lb_logs_policy" {
         Sid       = "AWSLogDeliveryWrite"
         Effect    = "Allow"
         Principal = {
-          Service = "delivery.logs.amazonaws.com"
+          "AWS": "arn:aws:iam::033677994240:root"
         }
         Action   = "s3:PutObject"
         Resource = "arn:aws:s3:::django-log-bucket/django-e2e-alb/*"
@@ -125,7 +125,7 @@ resource "aws_s3_bucket_policy" "lb_logs_policy" {
         Sid       = "AWSLogDeliveryAclCheck"
         Effect    = "Allow"
         Principal = {
-          Service = "delivery.logs.amazonaws.com"
+          "AWS": "arn:aws:iam::033677994240:root"
         }
         Action   = "s3:GetBucketAcl"
         Resource = "arn:aws:s3:::django-log-bucket"
