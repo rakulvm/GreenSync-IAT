@@ -42,3 +42,18 @@ variable "egress_ipv4" {
   type    = string
   default = "0.0.0.0/0"
 }
+
+variable "certificate_arn" {
+  type = string
+  default = "arn:aws:acm:us-east-2:309555896103:certificate/3a9524c0-e169-4dc6-8357-7b4c274a42ba"
+}
+
+variable "godaddy_api_key" {
+  type = string
+  default = "gHptDaEZnP48_6JjzMLRdG4ptJG7ddAqqhC"
+}
+
+variable "godaddy_api_secret" {
+  type = string
+  default = "Qz3eevDBU2F4gMoqe9vtcV"
+}
