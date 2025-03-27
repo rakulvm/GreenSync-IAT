@@ -12,8 +12,8 @@ terraform {
 }
 
 provider "godaddy" {
-  key    = "gHptDaEZnP48_6JjzMLRdG4ptJG7ddAqqhC"
-  secret = "Qz3eevDBU2F4gMoqe9vtcV"
+  key    = "gHptDaEZnP48_3VUgwE2sKpbXAzcC7sEynk"
+  secret = "8gTX8SN532ZRkL8tUbtHZJ"
 }
 
 provider "aws" {
