@@ -134,12 +134,8 @@ resource "aws_s3_bucket_policy" "lb_logs_policy" {
   })
 }
 
-resource "aws_route53_zone" "django_e2e_app_zone" {
-  name = "e2e-apps.site"
-}
-
 resource "aws_route53_record" "jenkins" {
-  zone_id = aws_route53_zone.django_e2e_app_zone.zone_id
+  zone_id = "Z0802368VZ5A28H5YMPD"
   name    = "jenkins.e2e-apps.site"
   type    = "CNAME"
   ttl     = 300
