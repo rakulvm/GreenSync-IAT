@@ -121,7 +121,7 @@ resource "aws_s3_bucket_policy" "lb_logs_policy" {
           }
         }
       },
-      {
+      { 
         Sid       = "AWSLogDeliveryAclCheck"
         Effect    = "Allow"
         Principal = {
@@ -134,16 +134,16 @@ resource "aws_s3_bucket_policy" "lb_logs_policy" {
   })
 }
 
-resource "godaddy_domain_record" "jenkins" {
-  depends_on = [ aws_lb.django_e2e_alb ]
+resource "aws_route53_zone" "django_e2e_app_zone" {
+  name = "e2e-apps.site"
+}
 
-  domain = "e2e-app.xyz"
-  record {
-    name = "jenkins"
-    type = "CNAME"
-    data = aws_lb.django_e2e_alb.dns_name
-    ttl  = 300
-  }
+resource "aws_route53_record" "jenkins" {
+  zone_id = aws_route53_zone.django_e2e_app_zone.zone_id
+  name    = "jenkins.e2e-apps.site"
+  type    = "CNAME"
+  ttl     = 300
+  records = [aws_lb.django_e2e_alb.dns_name]
 }
 
 resource "aws_lb_listener" "django_redirect" {
