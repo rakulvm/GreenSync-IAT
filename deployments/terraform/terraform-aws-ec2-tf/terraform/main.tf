@@ -60,6 +60,31 @@ resource "aws_route_table_association" "public_association" {
   route_table_id = aws_route_table.public_rt.id
 }
 
+resource "aws_security_group" "lb_sg" {
+  name        = "lb-sg"
+  description = "Security group for load balancer of django e2e project"
+  vpc_id      = aws_vpc.main.id
+  tags = {
+    Name = "django-lb-sg"
+  }
+}
+
+resource "aws_security_group_rule" "lb-sg-jenkins" {
+  type = "ingress"
+  security_group_id = aws_security_group.lb_sg.id
+  cidr_blocks  = [var.ingress_ipv4]
+  from_port   = 80
+  protocol = "tcp"
+  to_port     = 80
+}
+
+resource "aws_security_group_rule" "lb-sg-egress" {
+  type = "egress"
+  security_group_id = aws_security_group.lb_sg.id
+  from_port = 0
+  protocol = "-1"
+  to_port = 0
+}
 
 resource "aws_security_group" "django-sg" {
   name        = "django-sg"
@@ -70,26 +95,30 @@ resource "aws_security_group" "django-sg" {
   }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "django-sg-jenkins" {
-  security_group_id = aws_security_group.django-sg.id
-  cidr_ipv4   = var.ingress_ipv4
-  from_port   = 8080
-  ip_protocol = "tcp"
-  to_port     = 8080
+resource "aws_security_group_rule" "django-sg-jenkins" {
+  type                     = "ingress"
+  security_group_id        = aws_security_group.django-sg.id
+  source_security_group_id = aws_security_group.lb_sg.id
+  from_port                = 8080
+  to_port                  = 8080
+  protocol                 = "tcp"
 }
 
-resource "aws_vpc_security_group_ingress_rule" "django-sg-ssh" {
+resource "aws_security_group_rule" "django-sg-ssh" {
+  type = "ingress"
   security_group_id = aws_security_group.django-sg.id
-  cidr_ipv4   = var.ingress_ipv4
+  cidr_blocks = [var.ingress_ipv4]
   from_port   = 22
-  ip_protocol = "tcp"
+  protocol = "tcp"
   to_port     = 22
 }
 
-resource "aws_vpc_security_group_egress_rule" "django-sg-egress" {
+resource "aws_security_group_rule" "django-sg-egress" {
+  type = "egress"
   security_group_id = aws_security_group.django-sg.id
-  cidr_ipv4   = var.egress_ipv4
-  ip_protocol = "-1"
+  from_port = 0
+  protocol = "-1"
+  to_port = 0
 }
 
 resource "aws_s3_bucket" "lb_logs" {

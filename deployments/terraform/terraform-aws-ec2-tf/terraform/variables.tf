@@ -48,11 +48,6 @@ variable "ingress_ipv4" {
   default = "0.0.0.0/0"
 }
 
-variable "egress_ipv4" {
-  type    = string
-  default = "0.0.0.0/0"
-}
-
 variable "certificate_arn" {
   type = string
   default = "arn:aws:acm:us-east-2:309555896103:certificate/3a9524c0-e169-4dc6-8357-7b4c274a42ba"
