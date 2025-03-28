@@ -81,6 +81,7 @@ resource "aws_security_group_rule" "lb-sg-jenkins" {
 resource "aws_security_group_rule" "lb-sg-egress" {
   type = "egress"
   security_group_id = aws_security_group.lb_sg.id
+  cidr_blocks = [var.egress_ipv4]
   from_port = 0
   protocol = "-1"
   to_port = 0
@@ -118,6 +119,7 @@ resource "aws_security_group_rule" "django-sg-egress" {
   security_group_id = aws_security_group.django-sg.id
   from_port = 0
   protocol = "-1"
+  cidr_blocks = [var.egress_ipv4]
   to_port = 0
 }
 
