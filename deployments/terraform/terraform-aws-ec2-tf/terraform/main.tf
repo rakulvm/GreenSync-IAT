@@ -73,9 +73,9 @@ resource "aws_security_group_rule" "lb-sg-jenkins" {
   type = "ingress"
   security_group_id = aws_security_group.lb_sg.id
   cidr_blocks  = [var.ingress_ipv4]
-  from_port   = 80
+  from_port   = 443
   protocol = "tcp"
-  to_port     = 80
+  to_port     = 443
 }
 
 resource "aws_security_group_rule" "lb-sg-egress" {
