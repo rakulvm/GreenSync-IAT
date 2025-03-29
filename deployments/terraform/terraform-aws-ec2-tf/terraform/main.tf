@@ -23,14 +23,14 @@ resource "aws_subnet" "public" {
   }
 }
 
-resource "aws_subnet" "private" {
+resource "aws_subnet" "public2" {
   vpc_id = aws_vpc.main.id
-  cidr_block = var.private_subnet_cidr
+  cidr_block = var.public2_subnet_cidr
   map_public_ip_on_launch = true
   availability_zone = var.availability_zone_2
 
   tags = {
-    Name = "Private-Subnet"
+    Name = "Public2-Subnet"
   }
 }
 
@@ -59,6 +59,12 @@ resource "aws_route_table_association" "public_association" {
   subnet_id      = aws_subnet.public.id
   route_table_id = aws_route_table.public_rt.id
 }
+
+resource "aws_route_table_association" "public2_association" {
+  subnet_id      = aws_subnet.public2.id
+  route_table_id = aws_route_table.public_rt.id
+}
+
 
 resource "aws_security_group" "lb_sg" {
   name        = "lb-sg"
@@ -206,7 +212,7 @@ resource "aws_lb" "django_e2e_alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = [aws_subnet.public.id, aws_subnet.private.id]
+  subnets            = [aws_subnet.public.id, aws_subnet.public2.id]
 
 
   access_logs {
