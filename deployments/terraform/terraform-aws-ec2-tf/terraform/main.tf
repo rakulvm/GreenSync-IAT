@@ -278,4 +278,3 @@ resource "aws_instance" "django_e2e" {
     private_key = file("django-e2e.pem")
   }
 }
-
