@@ -205,7 +205,7 @@ resource "aws_lb" "django_e2e_alb" {
   name               = "django-e2e-alb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.django-sg.id]
+  security_groups    = [aws_security_group.lb_sg.id]
   subnets            = [aws_subnet.public.id, aws_subnet.private.id]
 
 
