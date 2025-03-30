@@ -16,6 +16,8 @@ env:
   TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
   TFE_TOKEN: ${{ secrets.TF_API_TOKEN }}
   CONFIG_DIRECTORY: "./deployments/terraform/terraform-aws-ec2-tf/terraform/"
+  # Define your bucket name here
+  S3_BUCKET: "django-log-bucket"
 
 defaults:
   run:
@@ -42,5 +44,10 @@ jobs:
       - name: Plan Destroy
         run: terraform plan -destroy
 
+      - name: Cleanup S3 Bucket
+        run: |
+          echo "Cleaning up bucket: $S3_BUCKET"
+          aws s3 rm s3://$S3_BUCKET --recursive
+
       - name: Apply Destroy
-        run: terraform apply -destroy
+        run: terraform apply -destroy -auto-approve
