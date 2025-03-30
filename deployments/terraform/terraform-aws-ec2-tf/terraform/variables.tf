@@ -55,5 +55,5 @@ variable "egress_ipv4" {
 
 variable "certificate_arn" {
   type = string
-  default = "arn:aws:acm:us-east-2:309555896103:certificate/11768bd8-1c64-4dea-95f0-4add36764586"
+  default = "arn:aws:acm:us-east-2:309555896103:certificate/6e2a836c-4eb4-4e8c-8542-0f8c93cc5589"
 }

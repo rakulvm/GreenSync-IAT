@@ -50,4 +50,4 @@ jobs:
           aws s3 rm s3://$S3_BUCKET --recursive
 
       - name: Apply Destroy
-        run: terraform apply -destroy -auto-approve
+        run: terraform apply -destroy
