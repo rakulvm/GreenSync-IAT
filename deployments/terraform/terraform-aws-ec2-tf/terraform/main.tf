@@ -181,7 +181,7 @@ resource "aws_s3_bucket_policy" "lb_logs_policy" {
 }
 
 resource "aws_route53_record" "jenkins" {
-  zone_id = "Z0802368VZ5A28H5YMPD"
+  zone_id = "Z00166433001YU3XLRPD9"
   name    = "jenkins.e2eapps.site"
   type    = "CNAME"
   ttl     = 300
