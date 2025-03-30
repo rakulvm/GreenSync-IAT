@@ -182,7 +182,7 @@ resource "aws_s3_bucket_policy" "lb_logs_policy" {
 
 resource "aws_route53_record" "jenkins" {
   zone_id = "Z0802368VZ5A28H5YMPD"
-  name    = "jenkins.e2e-apps.site"
+  name    = "jenkins.e2eapps.site"
   type    = "CNAME"
   ttl     = 300
   records = [aws_lb.django_e2e_alb.dns_name]
