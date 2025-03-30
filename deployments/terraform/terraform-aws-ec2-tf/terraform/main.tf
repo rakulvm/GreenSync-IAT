@@ -208,7 +208,7 @@ resource "aws_lb_listener" "django_listen" {
   load_balancer_arn = aws_lb.django_e2e_alb.arn
   port              = "443"
   protocol          = "HTTPS"
-  certificate_arn   = var.certificate_arn
+  # certificate_arn   = var.certificate_arn
 
   default_action {
     type             = "forward"
