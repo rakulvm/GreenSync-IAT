@@ -8,6 +8,12 @@ sudo apt install zip -y
 
 echo 'JDK successfully installed'
 
+#Python3 installation
+
+sudo apt install python3 -y
+
+echo 'Python3 successfully installed'
+
 # Jenkins installation
 
 sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \

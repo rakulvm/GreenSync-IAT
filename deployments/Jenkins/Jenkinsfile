@@ -17,7 +17,7 @@ pipeline {
     stages{
         stage('Environment'){
             steps{
-                sh 'python --version'
+                sh 'python3 --version'
                 git url: 'https://github.com/rakulvm/GreenSync-IAT.git'
             }
         }
