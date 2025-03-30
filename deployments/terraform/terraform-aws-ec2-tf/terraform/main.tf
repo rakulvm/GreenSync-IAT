@@ -2,7 +2,6 @@
 
 # instance, key pair, security group, vpc -> where our subnet resides -> where our ec2 instance resides, internet gateway for allowing ansible to install dependencies by accessing the internet
 
-#new changes
 
 resource "aws_vpc" "main" {
   cidr_block       = var.vpc_cidr
