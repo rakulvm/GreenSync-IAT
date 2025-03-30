@@ -28,7 +28,7 @@ pipeline {
         }
         stage('Login'){
             steps{
-                sh 'docker login -u rakul21'
+                sh "echo ${dockerhub_creds} | docker login -u rakul21 --password-stdin"
             }
         }
         stage('Docker Push'){
