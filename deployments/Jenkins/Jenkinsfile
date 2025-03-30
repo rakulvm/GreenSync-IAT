@@ -1,0 +1,68 @@
+def COLOR_MAP = {
+	'SUCCESS': 'good',
+	'FAILURE': 'danger',
+}
+
+pipeline {
+    agent any
+
+    options{
+        buildDiscarder(logRotator(numToKeepStr: '3'))
+    }
+
+    environment{
+        dockerhub_creds = credentials('docker-hub')
+    }
+
+    stages{
+        stage('Environment'){
+            steps{
+                sh 'python --version'
+                git url: 'https://github.com/rakulvm/GreenSync-IAT.git'
+            }
+        }
+        stage('Docker Build'){
+            steps{
+                sh 'docker build -t rakul21/django_e2e:latest --no-cache'
+            }
+        }
+        stage('Login'){
+            steps{
+                sh 'docker login -u rakul21'
+            }
+        }
+        stage('Docker Push'){
+            steps{
+                sh 'docker images'
+                sh 'docker images --filter "reference=django_e2e*"'
+                sh 'docker push rakul21/django_e2e:latest'
+            }
+        }
+        stage('Run the container'){
+            steps{
+                sh 'docker-compose up -d'
+            }
+        }
+    }
+
+    post{
+        success{
+            mail to: 'rakulmanokaran@gmail.com',
+                 subject: "Build Success: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                 body: """<html>
+                         <p style="color: ${COLOR_MAP['SUCCESS']}">The build was successful.</p>
+                         <p>Check the details here: ${env.BUILD_URL}</p>
+                         </html>""",
+                 mimeType: 'text/html'
+        }
+        failure{
+            mail to: 'rakulmanokaran@gmail.com',
+                 subject: "Build Failure: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                 body: """<html>
+                         <p style="color: ${COLOR_MAP['FAILURE']}">The build was failure.</p>
+                         <p>Check the details here: ${env.BUILD_URL}</p>
+                         </html>""",
+                 mimeType: 'text/html'
+        }
+    }
+}
