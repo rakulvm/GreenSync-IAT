@@ -1,6 +1,6 @@
 def COLOR_MAP = [
-	'SUCCESS': 'good',
-	'FAILURE': 'danger',
+    SUCCESS: 'good',
+    FAILURE: 'danger'
 ]
 
 pipeline {
@@ -8,10 +8,6 @@ pipeline {
 
     options{
         buildDiscarder(logRotator(numToKeepStr: '3'))
-    }
-
-    environment{
-        dockerhub_creds = credentials('docker-cred')
     }
 
     stages{
@@ -28,13 +24,21 @@ pipeline {
         }
         stage('Docker Hub Login'){
             steps{
-                sh "echo ${dockerhub_creds} | docker login -u rakul21 --password-stdin"
-            }
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'docker-cred', 
+                        passwordVariable: 'DOCKERHUB_PASS', 
+                        usernameVariable: 'DOCKERHUB_USER')
+                    ]) 
+                {
+                    sh 'echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USER" --password-stdin'
+                }
+        }
         }
         stage('Docker Push'){
             steps{
                 sh 'docker images'
-                sh 'docker images --filter "reference=django_e2e*"'
+                sh 'docker images | grep django_e2e'
                 sh 'docker push rakul21/django_e2e:latest'
             }
         }
