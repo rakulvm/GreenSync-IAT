@@ -64,5 +64,10 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 echo 'Docker Compose installed successfully'
 
-# adding comment to trigger workflow
+sudo -u jenkins ssh-keyscan -t rsa github.com >> /var/lib/jenkins/.ssh/known_hosts
 
+echo 'Added RSA key to server (host key verification)'
+
+sudo -u jenkins ssh-keyscan -t ed25519 github.com >> /var/lib/jenkins/.ssh/known_hosts
+
+echo 'Added ED key for host key verification'
