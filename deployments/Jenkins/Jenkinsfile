@@ -15,18 +15,18 @@ pipeline {
     }
 
     stages{
-        stage('Environment'){
+        stage('Checkout & Environment'){
             steps{
-                sh 'python3 --version'
                 git url: 'https://github.com/rakulvm/GreenSync-IAT.git'
+                sh 'python3 --version'
             }
         }
         stage('Docker Build'){
             steps{
-                sh 'docker build -t rakul21/django_e2e:latest --no-cache'
+                sh 'docker build -t rakul21/django_e2e:latest --no-cache .'
             }
         }
-        stage('Login'){
+        stage('Docker Hub Login'){
             steps{
                 sh "echo ${dockerhub_creds} | docker login -u rakul21 --password-stdin"
             }
