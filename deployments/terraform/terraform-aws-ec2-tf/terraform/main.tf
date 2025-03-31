@@ -3,6 +3,8 @@
 # instance, key pair, security group, vpc -> where our subnet resides -> where our ec2 instance resides, internet gateway for allowing ansible to install dependencies by accessing the internet
 
 
+#triggering pipeline
+
 resource "aws_vpc" "main" {
   cidr_block       = var.vpc_cidr
   instance_tenancy = "default"
