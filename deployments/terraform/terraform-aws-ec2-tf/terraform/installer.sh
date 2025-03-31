@@ -28,6 +28,13 @@ sudo apt install jenkins -y
 
 echo 'Jenkins installed successfully'
 
+sudo usermod -aG docker jenkins
+
+sudo id jenkins
+
+sudo systemctl restart jenkins
+
+echo 'Added Jenkins user to the Docker group'
 
 # Docker installation
 
