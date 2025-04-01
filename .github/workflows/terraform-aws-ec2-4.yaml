@@ -1,5 +1,4 @@
 # Deploy yaml typically has 5 points in place: event, job, runner, steps, configF
-### changes to trigger workfloww ####
 
 # Update in infrastructure
 name: "Terraform Pipeline Provision EC2"
