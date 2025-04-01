@@ -85,11 +85,11 @@ sudo chmod 755 /var/lib/jenkins/.ssh/known_hosts
 
 # Add E-mail notification part
 
-mkdir -p /var/jenkins_home/init.groovy.d
+sudo mkdir -p /var/jenkins_home/init.groovy.d
 
-cd /var/jenkins_home/init.groovy.d
+sudo cd /var/jenkins_home/init.groovy.d
 
-touch mail-config.groovy
+sudo touch mail-config.groovy
 
 echo "import jenkins.model.*
 import hudson.tasks.Mailer
@@ -114,7 +114,7 @@ chmod 755 /var/jenkins_home/init.groovy.d/mail-config.groovy
 
 # Adding Plugin installation part 
 
-touch plugins.groovy
+sudo touch plugins.groovy
 
 echo "import jenkins.model.*
 import hudson.PluginWrapper
@@ -153,6 +153,6 @@ plugins.each { pluginId ->
 
 instance.save()" > plugins.groovy
 
-chmod 755 /var/jenkins_home/init.groovy.d/plugins.groovy
+sudo chmod 755 /var/jenkins_home/init.groovy.d/plugins.groovy
 
-systemctl restart jenkins
+sudo systemctl restart jenkins
